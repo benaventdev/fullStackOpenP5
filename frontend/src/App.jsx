@@ -33,6 +33,18 @@ const App = () => {
     }
   }
   
+  const handleBlogChange = (event) => {
+    event.preventDefault()
+    try {
+      
+    } catch (exception) {
+      setErrorMessage('Wrong blog format')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -57,17 +69,15 @@ const App = () => {
     </form>      
   )
 
-  const noteForm = () => (
-    <form onSubmit={addNote}>
+  const blogForm = () => (
+    <form onSubmit={() => console.log("Hello, adding blog")}>
       <input
-        value={newNote}
-        onChange={handleNoteChange}
+        value={newBlog}
+        onChange={handleBlogChange}
       />
       <button type="submit">save</button>
     </form>  
   )
-  
-    
 
   useEffect(() => {
     blogService
@@ -86,7 +96,7 @@ const App = () => {
         ? loginForm()
         : <div>
             <p>{user.name} logged-in</p>
-            {noteForm()}
+            {blogForm()}
           </div>
       }
 
