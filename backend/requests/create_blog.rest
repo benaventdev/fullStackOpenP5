@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1hcmlldGEiLCJpZCI6IjY2NzgwZmM2MTY2OTA1YTZjYWU2NzY0YSIsImlhdCI6MTcxOTE1MTY2MSwiZXhwIjoxNzE5MTU1MjYxfQ.6A-0hSbXA8B5m6xidH6Ac5C5Y5JyufT5rw3-4HaA2AA
+
+{
+  "url": "https://noSeCuinar1234.url",
+  "title": "Ara a fer la mona",
+  "author": "MARIA ANTONIETA",
+  "likes": 5
+}
