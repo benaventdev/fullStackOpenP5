@@ -1,7 +1,7 @@
 const Blog = ({ blog }) => (
-  <div key={blog.id}>
+  <li key={blog.id}>
     {blog.title} {blog.author}
-  </div>  
+  </li>  
 )
 
 export default Blog

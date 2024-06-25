@@ -3,11 +3,12 @@ import Blog from './components/Blog'
 import Footer from './components/Footer'
 import Notification from './components/Notification'
 import loginService from './services/login'
-import blogService from './services/blogs'
+import blogService from './services/blog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNetBlog] = useState([])
+  const [newBlogTitle, setNewBlogTitle] = useState([])
+  const [newBlogAuthor, setNewBlogAuthor] = useState([])
   const [showAll, setShowAll] = useState([])
   const [errorMessages, setErrorMessages] = useState([])
   const [username, setUsername] = useState('')   
@@ -27,18 +28,6 @@ const App = () => {
       setPassword('')    
     } catch (exception) {
       setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-    }
-  }
-  
-  const handleBlogChange = (event) => {
-    event.preventDefault()
-    try {
-      
-    } catch (exception) {
-      setErrorMessage('Wrong blog format')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -69,15 +58,61 @@ const App = () => {
     </form>      
   )
 
+  const handleBlogTitleChange = (event) => {
+    event.preventDefault()
+    try {
+      setNewBlogTitle(event.target.value)
+      console.log("El valor del title es ", event.target.value)
+      addNote(newBlog)
+    } catch (exception) {
+      setErrorMessages('Wrong blog format')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const handleBlogAuthorChange = (event) => {
+    event.preventDefault()
+    try {
+      setNewBlogAuthor(event.target.value)
+      console.log("El valor del author es ", event.target.value)
+      addNote(newBlog)
+    } catch (exception) {
+      setErrorMessages('Wrong blog format')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   const blogForm = () => (
     <form onSubmit={() => console.log("Hello, adding blog")}>
+      Blog title: <br/>
       <input
-        value={newBlog}
-        onChange={handleBlogChange}
-      />
-      <button type="submit">save</button>
+        value={newBlogTitle}
+        onChange={handleBlogTitleChange}
+      /><br/><br/>
+      Author name:<br/>
+      <input
+        value={newBlogAuthor}
+        onChange={handleBlogAuthorChange}
+      /><br/>
+      <button type="submit">Save Blog</button>
     </form>  
   )
+
+  const addBlog = (event) => {
+    event.preventDefault()
+    const blogObject = {
+      title: newBlogTitle,
+      author: newBlogAuthor
+    }
+
+    setBlogs(blogs.concat(blogObject))
+    setNewBlogAuthor('')
+    setNewBlogTitle('')
+  }
 
   useEffect(() => {
     blogService
@@ -90,12 +125,12 @@ const App = () => {
   return (
     <div>
       <h1>Blogs</h1>
-      <Notification message={console.errorMessages}/>
+      <Notification message={errorMessages}/>
       
       {user === null 
         ? loginForm()
         : <div>
-            <p>{user.name} logged-in</p>
+            <p>{user} Fake-login</p>
             {blogForm()}
           </div>
       }
@@ -108,7 +143,7 @@ const App = () => {
       </div>
       <ul>
         {blogs.map(blog => 
-          <Blog blog={blog}/>
+          <Blog key={blog.id} blog={blog}/>
         )}
       </ul>
       <Footer />

@@ -6,4 +6,8 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
-export default { getAll }
+const postNewBlog = () => {
+  axios.post(baseUrl, credential)
+
+}
+export default { getAll, postNewBlog }
